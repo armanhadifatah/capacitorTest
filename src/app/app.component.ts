@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Plugins } from '@capacitor/core';
+const { FirebaseDynamicLink } = Plugins
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,12 @@ export class AppComponent {
   }
 
   initializeApp() {
+    FirebaseDynamicLink.addListener('onOpenWithDynamicLink', (value) => {
+      let deeplink = value.deeplink;
+      console.log(deeplink);
+      alert(deeplink);
+    });
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
